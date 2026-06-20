@@ -48,6 +48,12 @@ transporter.verify((error, success) => {
 app.post("/contact", async (req, res) => {
   const { name, email, message } = req.body;
 
+  const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on ${PORT} 🚀`);
+});
+
 //   /* ❌ COMMENTED DATABASE INSERT
 //   const sql =
 //     "INSERT INTO contacts (name,email,message) VALUES (?,?,?)";
@@ -98,7 +104,7 @@ app.post("/contact", async (req, res) => {
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`Server running on ${PORT} 🚀`);
+  console.log(`Server running on ${PORT} `);
 });
 
 
