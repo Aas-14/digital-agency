@@ -102,7 +102,9 @@ app.listen(PORT, () => {
 });
 
 
-
+app.get("/", (req, res) => {
+  res.send("Just Media Backend is running successfully");
+});
 
 
 // require('dotenv').config();
