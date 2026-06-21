@@ -63,7 +63,7 @@ try{
 
 await resend.emails.send({
 
-from: "onboarding@resend.dev",
+from: "JustMedia05 <onboarding@resend.dev>",
 
 to: process.env.EMAIL_USER,
 
