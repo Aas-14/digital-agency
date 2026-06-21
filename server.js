@@ -2,57 +2,64 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 const { Resend } = require("resend");
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-const path = require("path");
 
 const app = express();
 
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({extended:true}));
-app.use(express.static("public"));
-
-
-app.get("/", (req,res)=>{
-    res.sendFile(
-        path.join(__dirname,"public","index.html")
-    );
-});
-
-
-// EMAIL SETUP
-
-const { Resend } = require("resend");
 
 const resend = new Resend(
     process.env.RESEND_API_KEY
 );
 
 
-transporter.verify((error)=>{
- if(error){
-    console.log(error);
- }
- else{
-    console.log("Mail Server Ready ✅");
- }
+
+app.use(cors());
+
+app.use(express.json());
+
+app.use(express.urlencoded({
+    extended:true
+}));
+
+app.use(express.static("public"));
+
+
+
+app.get("/", (req,res)=>{
+
+    res.sendFile(
+        path.join(__dirname,"public","index.html")
+    );
+
 });
 
 
 
+app.get("/test",(req,res)=>{
 
-app.get("/test", (req,res)=>{
     res.send("Backend working ✅");
+
 });
+
+
+
 
 app.post("/contact", async(req,res)=>{
 
-const {name,email,message}=req.body;
+
+const {
+    name,
+    email,
+    message
+
+}=req.body;
+
 
 
 try{
+
 
 await resend.emails.send({
 
@@ -60,46 +67,71 @@ from: "onboarding@resend.dev",
 
 to: process.env.EMAIL_USER,
 
-subject: "New Website Lead - Just Media 05",
+subject:"New Website Lead - Just Media 05",
 
-html: `
+
+html:`
+
 <h2>New Contact Form Submission</h2>
 
-<p>Name: ${name}</p>
+<p><b>Name:</b> ${name}</p>
 
-<p>Email: ${email}</p>
+<p><b>Email:</b> ${email}</p>
 
-<p>Message: ${message}</p>
+<p><b>Message:</b> ${message}</p>
+
+
 `
 
 });
 
+
+
 res.json({
+
 success:true,
+
 message:"Email sent"
+
 });
+
 
 
 }
 
-catch(err){
+catch(error){
 
-console.log(err);
+
+console.log(error);
+
 
 res.status(500).json({
-success:false
+
+success:false,
+
+message:"Email failed"
+
 });
+
 
 }
 
+
+
 });
 
 
-const PORT=process.env.PORT || 5000;
+
+
+
+const PORT = process.env.PORT || 5000;
+
 
 
 app.listen(PORT,()=>{
+
 console.log(
 `Server running on ${PORT}`
 );
+
 });
