@@ -1,15 +1,4 @@
 // HERO BUTTON
-const path = require("path");
-
-app.use(express.static("public"));
-
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
-});
-
-
-
-
 document.getElementById('btn')?.addEventListener('click', () => {
     document.querySelector('#contact')
     .scrollIntoView({
@@ -32,7 +21,7 @@ form.addEventListener("submit", async (e) => {
     try {
 
         const res = await fetch(
-           "http://localhost:5000/contact", 
+        "/contact", 
             {
                 method: "POST",
                 headers: {
