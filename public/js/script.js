@@ -11,59 +11,76 @@ document.getElementById('btn')?.addEventListener('click', () => {
 
 const form = document.getElementById("contactForm");
 
-form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+if(form){
 
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const message = document.getElementById("message").value;
+form.addEventListener("submit", async (e)=>{
 
-
-    try {
-
-        const res = await fetch("/contact", {
-
-            method:"POST",
-
-            headers:{
-                "Content-Type":"application/json"
-            },
-
-            body:JSON.stringify({
-                name,
-                email,
-                message
-            })
-
-        });
+e.preventDefault();
 
 
-        const data = await res.json();
+const name =
+document.getElementById("name").value;
+
+const email =
+document.getElementById("email").value;
+
+const message =
+document.getElementById("message").value;
 
 
-        if(res.ok){
-
-            alert("Message sent successfully ✅");
-            form.reset();
-
-        }
-        else{
-
-            alert("Failed to send ❌");
-
-        }
+try{
 
 
-    }
-    catch(err){
+const res = await fetch("/contact",{
 
-        console.log(err);
+method:"POST",
 
-        alert("Backend not connected ❌");
+headers:{
+"Content-Type":"application/json"
+},
 
-    }
+body:JSON.stringify({
+
+name,
+email,
+message
+
+})
 
 });
+
+
+if(res.ok){
+
+alert("Message sent successfully ✅");
+
+form.reset();
+
+}
+
+else{
+
+alert("Server error ❌");
+
+}
+
+
+}
+
+catch(error){
+
+console.log(error);
+
+alert("Backend not connected ❌");
+
+}
+
+
+
+});
+
+
+}
 
 
 // REVEAL ANIMATION

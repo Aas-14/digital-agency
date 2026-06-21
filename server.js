@@ -2,7 +2,9 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
-const nodemailer = require("nodemailer");
+const { Resend } = require("resend");
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 const path = require("path");
 
 const app = express();
@@ -63,28 +65,25 @@ const {name,email,message}=req.body;
 
 try{
 
-await transporter.sendMail({
+await resend.emails.send({
 
-from:process.env.EMAIL_USER,
+from: "onboarding@resend.dev",
 
-to:process.env.EMAIL_USER,
+to: process.env.EMAIL_USER,
 
-subject:"New Website Lead - Just Media 05",
+subject: "New Website Lead - Just Media 05",
 
-html:`
+html: `
+<h2>New Contact Form Submission</h2>
 
-<h2>New Contact Form</h2>
+<p>Name: ${name}</p>
 
-<p>Name:${name}</p>
+<p>Email: ${email}</p>
 
-<p>Email:${email}</p>
-
-<p>Message:${message}</p>
-
+<p>Message: ${message}</p>
 `
 
 });
-
 
 res.json({
 success:true,
