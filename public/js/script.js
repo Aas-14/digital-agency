@@ -18,37 +18,53 @@ form.addEventListener("submit", async (e) => {
     const email = document.getElementById("email").value;
     const message = document.getElementById("message").value;
 
+
     try {
 
-        const res = await fetch(
-        "/contact", 
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type":"application/json"
-                },
-                body: JSON.stringify({
-                    name,
-                    email,
-                    message
-                })
-            }
-        );
+        const res = await fetch("/contact", {
 
-        // no response.json()
+            method:"POST",
+
+            headers:{
+                "Content-Type":"application/json"
+            },
+
+            body:JSON.stringify({
+                name,
+                email,
+                message
+            })
+
+        });
+
+
+        const data = await res.json();
+
 
         if(res.ok){
-            alert("Message Saved Successfully ✅");
+
+            alert("Message sent successfully ✅");
             form.reset();
-        } else {
+
+        }
+        else{
+
             alert("Failed to send ❌");
+
         }
 
-    } catch(err){
-        console.log(err);
-        alert("Backend not connected ❌");
+
     }
+    catch(err){
+
+        console.log(err);
+
+        alert("Backend not connected ❌");
+
+    }
+
 });
+
 
 // REVEAL ANIMATION
 
