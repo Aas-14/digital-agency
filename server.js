@@ -24,22 +24,11 @@ app.get("/", (req,res)=>{
 
 // EMAIL SETUP
 
-const transporter = nodemailer.createTransport({
+const { Resend } = require("resend");
 
-    host: "smtp.gmail.com",
-
-    port: 587,
-
-    secure: false,
-
-    requireTLS: true,
-
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    }
-
-});
+const resend = new Resend(
+    process.env.RESEND_API_KEY
+);
 
 
 transporter.verify((error)=>{
